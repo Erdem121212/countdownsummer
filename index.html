@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Geri Sayım 2026</title>
+</head>
+<body>
+
+    <h1>26 Haziran 2026'ya Kalan Süre:</h1>
+    
+    <h2 id="sayac">Yükleniyor...</h2>
+
+    <script>
+        // Hedef tarihi belirle (26 Haziran 2026 00:00:00)
+        var hedefTarih = new Date("Jun 26, 2026 00:00:00").getTime();
+
+        // Her 1 saniyede bir güncelleme yap
+        var x = setInterval(function() {
+
+            // Bugünün tarihini ve saatini al
+            var simdi = new Date().getTime();
+
+            // Hedef tarih ile şimdi arasındaki farkı bul
+            var fark = hedefTarih - simdi;
+
+            // Gün, saat, dakika ve saniye hesaplamaları
+            var gun = Math.floor(fark / (1000 * 60 * 60 * 24));
+            var saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
+            var saniye = Math.floor((fark % (1000 * 60)) / 1000);
+
+            // Sonucu id="sayac" olan elemente yazdır
+            document.getElementById("sayac").innerHTML = gun + " Gün " + saat + " Saat "
+            + dakika + " Dakika " + saniye + " Saniye ";
+
+            // Geri sayım bittiğinde metni değiştir
+            if (fark < 0) {
+                clearInterval(x);
+                document.getElementById("sayac").innerHTML = "Süre Doldu!";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
