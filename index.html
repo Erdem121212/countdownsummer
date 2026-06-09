@@ -3,57 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geri Sayım</title>
+    <title>count when its fine..</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-image: depositphotos_208915272-stock-photo-idyllic-tropical-beach-sunset-landscape.jpg;
             font-family: 'Inter', sans-serif;
+            
+            /* Arka plan resmi ayarları */
+            background-image: url('depositphotos_208915272-stock-photo-idyllic-tropical-beach-sunset-landscape.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #1a1a1a; /* Resim yüklenene kadar placeholder renk */
+        }
+
+        /* Resmin üzerine hafif bir karartma (Opsiyonel: Yazı daha iyi okunsun diye) */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
 
         #timer {
-            font-size: 4rem;
-            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            font-size: 6rem; /* Biraz büyük olması için artırıldı */
+            font-weight: 600; /* Çok sert olmayan bold (Semibold gibi) */
+            letter-spacing: -2px;
+            
+            /* İstediğiniz özel gradient stil */
             background: #CFA173;
             background: repeating-linear-gradient(to bottom right, #CFA173 0%, #5F5FCF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
+        }
+
+        /* Mobil cihazlar için font boyutunu ayarla */
+        @media (max-width: 768px) {
+            #timer {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="timer">Yükleniyor...</div>
+    <div id="timer">loading..</div>
 
     <script>
+        // Hedef tarih: 26 Haziran 2026
         const targetDate = new Date("June 26, 2026 00:00:00").getTime();
 
         function updateTimer() {
             const now = new Date().getTime();
             const distance = targetDate - now;
 
+            // Zaman hesaplamaları
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            // Ekrana yazdırma
             document.getElementById("timer").innerHTML = 
-                `${days}g ${hours}s ${minutes}d ${seconds}sn`;
+                `${days} : ${hours} : ${minutes} : ${seconds}`;
 
+            // Süre dolduğunda
             if (distance < 0) {
                 clearInterval(interval);
                 document.getElementById("timer").innerHTML = "Süre Doldu";
             }
         }
 
+        // Saniyede bir güncelle
         const interval = setInterval(updateTimer, 1000);
         updateTimer();
     </script>
