@@ -36,6 +36,7 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: -1; /* Yazının arkasında kalması için */
+            filter: brightness(50%);
         }
 
         #timer {
@@ -44,10 +45,10 @@
             letter-spacing: -2px;
             
             /* Gradient stil */
-            background: #836E2B;
-            background: linear-gradient(to right, #836E2B 0%, #4A5189 100%);
+            background: repeating-linear-gradient(to bottom right, #CFA173 0%, #5F5FCF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
         @media (max-width: 768px) {
