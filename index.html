@@ -2,44 +2,60 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Geri Sayım 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geri Sayım</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image:
+            font-family: 'Inter', sans-serif;
+        }
+
+        #timer {
+            font-size: 4rem;
+            font-weight: 600;
+            background: #CFA173;
+            background: repeating-linear-gradient(to bottom right, #CFA173 0%, #5F5FCF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>26 Haziran 2026'ya Kalan Süre:</h1>
-    
-    <h2 id="sayac">Yükleniyor...</h2>
+    <div id="timer">Yükleniyor...</div>
 
     <script>
-        // Hedef tarihi belirle (26 Haziran 2026 00:00:00)
-        var hedefTarih = new Date("Jun 26, 2026 00:00:00").getTime();
+        const targetDate = new Date("June 26, 2026 00:00:00").getTime();
 
-        // Her 1 saniyede bir güncelleme yap
-        var x = setInterval(function() {
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-            // Bugünün tarihini ve saatini al
-            var simdi = new Date().getTime();
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Hedef tarih ile şimdi arasındaki farkı bul
-            var fark = hedefTarih - simdi;
+            document.getElementById("timer").innerHTML = 
+                `${days}g ${hours}s ${minutes}d ${seconds}sn`;
 
-            // Gün, saat, dakika ve saniye hesaplamaları
-            var gun = Math.floor(fark / (1000 * 60 * 60 * 24));
-            var saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
-            var saniye = Math.floor((fark % (1000 * 60)) / 1000);
-
-            // Sonucu id="sayac" olan elemente yazdır
-            document.getElementById("sayac").innerHTML = gun + " Gün " + saat + " Saat "
-            + dakika + " Dakika " + saniye + " Saniye ";
-
-            // Geri sayım bittiğinde metni değiştir
-            if (fark < 0) {
-                clearInterval(x);
-                document.getElementById("sayac").innerHTML = "Süre Doldu!";
+            if (distance < 0) {
+                clearInterval(interval);
+                document.getElementById("timer").innerHTML = "Süre Doldu";
             }
-        }, 1000);
-    </script>
+        }
 
+        const interval = setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
 </body>
 </html>
